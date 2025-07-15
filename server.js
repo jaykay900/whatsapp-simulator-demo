@@ -42,19 +42,7 @@ const responseLog = {
 // Then push to memory, database, or file:
 logs.push(responseLog);
 res.json({ success: true, data: responseLog });
-  const logEntry = {
-    requestType,
-    userResponse,
-    demo: !!demo,
-    location,
-    suspicious,
-    result,
-    timestamp: new Date()
-  };
 
-  logs.push(logEntry);
-  console.log(logEntry);
-  res.status(200).json({ message: 'Logged', data: logEntry });
 });
 
 function isSuspiciousLocation(location) {
