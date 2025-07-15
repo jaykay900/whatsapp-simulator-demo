@@ -68,14 +68,8 @@ app.post('/admin-login', (req, res) => {
   }
 });
 
-function getResult(type, response) {
-    if (type === 'user' && response === 'yes') return "✔ Code accepted.";
-    if (type === 'user' && response === 'no') return "⚠ Suspicious response.";
-    if (type === 'attacker' && response === 'yes') return "🚨 Possible attack!";
-    return "✅ Code blocked.";
-}
 
-app.listen(3000, () => console.log('Server running on http://localhost:3000'));
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
