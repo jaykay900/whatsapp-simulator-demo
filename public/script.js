@@ -66,32 +66,41 @@ const demoScenarios = [
 ];
 
 function runDemoSequence() {
+  const demoScenarios = [
+    { requestType: "attacker", userResponse: "yes" },
+    { requestType: "attacker", userResponse: "no" },
+    { requestType: "user", userResponse: "no" },
+    { requestType: "user", userResponse: "yes" }
+  ];
+
   demoScenarios.forEach((scenario, index) => {
     setTimeout(() => {
-      fetch('http://localhost:3000/log-response', {
+      const randomLocation = ["Ghana", "Nigeria", "Russia", "Brazil"][Math.floor(Math.random() * 4)];
+
+      fetch('/log-response', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...scenario, demo: true })
+        body: JSON.stringify({ ...scenario, demo: true, location: randomLocation })
       })
       .then(res => res.json())
       .then(data => {
         console.log("Demo step:", data);
         const viewer = document.getElementById("logViewer");
         viewer.innerHTML += `
-  <div style="border-left: 4px solid ${data.data.suspicious ? 'red' : 'green'}; padding-left: 10px; margin-bottom: 10px;">
-    <p>
-      <strong>Mode:</strong> ${data.data.demo ? "DEMO" : "LIVE"}<br>
-      <strong>Type:</strong> ${data.data.requestType}<br>
-      <strong>User:</strong> ${data.data.userResponse}<br>
-      <strong>Location:</strong> ${data.data.location}<br>
-      <strong>Suspicious:</strong> ${data.data.suspicious ? "🚨 YES" : "✅ NO"}<br>
-      <strong>Result:</strong> ${data.data.result}<br>
-      <strong>Time:</strong> ${new Date(data.data.timestamp).toLocaleString()}
-    </p>
-  </div><hr>
-`;
+          <div style="border-left: 4px solid ${data.data.suspicious ? 'red' : 'green'}; padding-left: 10px; margin-bottom: 10px;">
+            <p>
+              <strong>Mode:</strong> ${data.data.demo ? "DEMO" : "LIVE"}<br>
+              <strong>Type:</strong> ${data.data.requestType}<br>
+              <strong>User:</strong> ${data.data.userResponse}<br>
+              <strong>Location:</strong> ${data.data.location}<br>
+              <strong>Suspicious:</strong> ${data.data.suspicious ? "🚨 YES" : "✅ NO"}<br>
+              <strong>Result:</strong> ${data.data.result}<br>
+              <strong>Time:</strong> ${new Date(data.data.timestamp).toLocaleString()}
+            </p>
+          </div><hr>
+        `;
       });
-    }, index * 1500); // 1.5s delay between each demo step
+    }, index * 1500);
   });
 }
 
