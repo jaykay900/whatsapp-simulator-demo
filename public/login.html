@@ -53,9 +53,13 @@ input:focus {
       .then(data => {
         if (data.success) {
           localStorage.setItem("adminToken", "granted");
+          feedbackBox.style.display = "none";
+feedbackBox.innerHTML = "";
           window.location.href = "admin.html";
         } else {
-          alert("❌ Login failed");
+          const feedbackBox = document.getElementById("user-feedback");
+feedbackBox.innerHTML = `<p style="color:red; font-weight:bold;">❌ Login failed. Please check your credentials.</p>`;
+feedbackBox.style.display = "block";
         }
       });
     }

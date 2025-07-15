@@ -78,15 +78,15 @@ function runDemoSequence() {
         console.log("Demo step:", data);
         const viewer = document.getElementById("logViewer");
         viewer.innerHTML += `
-  <div style="border-left: 4px solid ${log.suspicious ? 'red' : 'green'}; padding-left: 10px; margin-bottom: 10px;">
+  <div style="border-left: 4px solid ${data.data.suspicious ? 'red' : 'green'}; padding-left: 10px; margin-bottom: 10px;">
     <p>
-      <strong>Mode:</strong> ${log.demo ? "DEMO" : "LIVE"}<br>
-      <strong>Type:</strong> ${log.requestType}<br>
-      <strong>User:</strong> ${log.userResponse}<br>
-      <strong>Location:</strong> ${log.location}<br>
-      <strong>Suspicious:</strong> ${log.suspicious ? "🚨 YES" : "✅ NO"}<br>
-      <strong>Result:</strong> ${log.result}<br>
-      <strong>Time:</strong> ${new Date(log.timestamp).toLocaleString()}
+      <strong>Mode:</strong> ${data.data.demo ? "DEMO" : "LIVE"}<br>
+      <strong>Type:</strong> ${data.data.requestType}<br>
+      <strong>User:</strong> ${data.data.userResponse}<br>
+      <strong>Location:</strong> ${data.data.location}<br>
+      <strong>Suspicious:</strong> ${data.data.suspicious ? "🚨 YES" : "✅ NO"}<br>
+      <strong>Result:</strong> ${data.data.result}<br>
+      <strong>Time:</strong> ${new Date(data.data.timestamp).toLocaleString()}
     </p>
   </div><hr>
 `;
