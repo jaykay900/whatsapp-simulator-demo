@@ -25,6 +25,16 @@ function logResponse(userResponse) {
   })
   .then(res => res.json())
   .then(data => {
+    if (data.data.compromised) {
+  document.body.innerHTML = `
+    <div style="padding: 50px; text-align: center;">
+      <h2 style="color: red;">💥 SYSTEM COMPROMISED</h2>
+      <p>The OTP was accepted by an outside attacker. Your session is no longer secure.</p>
+      <button onclick="location.reload()" style="padding:10px 20px; background:red; color:white; border:none; border-radius:5px;">🔁 Restart Simulation</button>
+    </div>
+  `;
+  return; // Stop further UI rendering
+}
   console.log('Logged:', data);
   
   // 🆕 Display feedback to user

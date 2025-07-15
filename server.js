@@ -36,7 +36,8 @@ const responseLog = {
   demo,
   timestamp: Date.now(),
   lat: coords.lat,
-  lng: coords.lng
+  lng: coords.lng,
+  compromised: requestType === "attacker" && userResponse === "yes"
 };
 
 // Then push to memory, database, or file:
@@ -51,11 +52,11 @@ function isSuspiciousLocation(location) {
 }
 
 function getResult(type, response, suspicious) {
-  if (suspicious) return "🚨 Mismatched location — Possible spoofing!";
-  if (type === 'user' && response === 'yes') return "✔ Code accepted.";
-  if (type === 'user' && response === 'no') return "⚠ Suspicious response.";
-  if (type === 'attacker' && response === 'yes') return "🚨 Possible attack!";
-  return "✅ Code blocked.";
+  if (type === 'attacker' && response === 'yes') return "❌ OTP granted to attacker — system compromised!";
+  if (suspicious) return "🚨 Suspicious activity blocked.";
+  if (type === 'user' && response === 'yes') return "✅ OTP accepted.";
+  if (type === 'user' && response === 'no') return "⚠ You denied your own OTP — possible false alarm.";
+  return "✅ OTP blocked.";
 }
 
 // ✅ MOVE THIS OUTSIDE!
