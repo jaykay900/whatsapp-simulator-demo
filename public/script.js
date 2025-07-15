@@ -21,9 +21,11 @@ if (requestType === "attacker") {
   fakeMessage = attackerMessages[Math.floor(Math.random() * attackerMessages.length)];
 }
 
-scenarioText.textContent = `Request triggered. Source: ${requestType === "user" ? "YOU" : "UNKNOWN"}.\n\n${
-  fakeMessage ? "Message: " + fakeMessage : "Did you request this code?"
-}`;
+scenarioText.innerHTML = `
+  <strong>🔔 OTP Request Triggered</strong><br>
+  <strong>Source:</strong> ${requestType === "user" ? "YOU" : "UNKNOWN"}<br><br>
+  ${fakeMessage ? `<em>💬 Message:</em> "${fakeMessage}"` : "Did you request this code?"}
+`;
 const demoToggle = document.getElementById("demoToggle");
 
 function logResponse(userResponse) {
