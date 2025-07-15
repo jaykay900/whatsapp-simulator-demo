@@ -3,6 +3,11 @@ const requestType = scenarios[Math.floor(Math.random() * scenarios.length)];
 const scenarioText = document.getElementById("scenarioText");
 const result = document.getElementById("result");
 
+if (!localStorage.getItem("adminToken")) {
+  document.getElementById("viewLogsBtn").style.display = "none";
+  document.getElementById("clearLogsBtn").style.display = "none";
+}
+
 scenarioText.textContent = `Request triggered. Source: ${requestType === "user" ? "YOU" : "UNKNOWN"}. Did you request this code?`;
 
 const demoToggle = document.getElementById("demoToggle");
@@ -40,7 +45,7 @@ document.getElementById("yesBtn").onclick = () => logResponse("yes");
 document.getElementById("noBtn").onclick = () => logResponse("no");
 
 document.getElementById("viewLogsBtn").onclick = () => {
-  fetch('/log-response')
+  fetch('/get-logs')
     .then(res => res.json())
     .then(data => {
       const viewer = document.getElementById("logViewer");
@@ -66,12 +71,7 @@ const demoScenarios = [
 ];
 
 function runDemoSequence() {
-  const demoScenarios = [
-    { requestType: "attacker", userResponse: "yes" },
-    { requestType: "attacker", userResponse: "no" },
-    { requestType: "user", userResponse: "no" },
-    { requestType: "user", userResponse: "yes" }
-  ];
+
 
   demoScenarios.forEach((scenario, index) => {
     setTimeout(() => {
@@ -106,9 +106,7 @@ function runDemoSequence() {
 
 
 document.getElementById("clearLogsBtn").onclick = () => {
-  fetch('/log-response', {
-    method: 'DELETE'
-  })
+  fetch('/clear-logs', { method: 'DELETE' })
   .then(res => res.json())
   .then(data => {
     console.log(data.message);
