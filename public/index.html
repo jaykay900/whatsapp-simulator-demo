@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <title>WhatsApp Verification Check</title>
+  <style>
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .container {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    max-width: 400px;
+    width: 100%;
+    box-shadow: 0 0 12px rgba(0,0,0,0.1);
+    text-align: center;
+  }
+
+  button {
+    width: 100%;
+    margin: 10px 0;
+    padding: 14px;
+    font-size: 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+
+  #yesBtn { background-color: #4CAF50; color: white; }
+  #noBtn { background-color: #f44336; color: white; }
+  #viewLogsBtn { background-color: #2196F3; color: white; }
+
+  #result {
+    margin-top: 15px;
+    font-weight: bold;
+    color: #333;
+  }
+
+  #logViewer {
+    margin-top: 15px;
+    text-align: left;
+  }
+
+  @media screen and (max-width: 500px) {
+    .container {
+      padding: 15px;
+    }
+
+    button {
+      font-size: 15px;
+    }
+  }
+</style>
+  <link rel="icon" href="data:,">
+</head>
+<body>
+  <div class="container">
+    <h2>Verification Code Alert</h2>
+    <p id="scenarioText"></p>
+    <button id="yesBtn">Yes, I requested it</button>
+    <button id="noBtn">No, I didn't request it</button> 
+    <label style="margin-top:10px; display:block;">
+  <input type="checkbox" id="demoToggle"> Enable Demo Mode
+</label>
+
+<button onclick="runDemoSequence()">▶️ Run Demo Sequence</button> 
+<button id="clearLogsBtn" style="background-color:#ff9800; color:white;">🧹 Clear Logs</button>
+    <div id="result"></div>
+
+    <hr>
+
+    <button id="viewLogsBtn">📜 View Response Logs</button>
+    <div id="logViewer"></div>
+  </div>
+ 
+
+  <script>
+    
+    document.getElementById("yesBtn").onclick = function() {
+      if (requestType === "user") {
+        result.textContent = "✔ Code accepted. Proceeding with login...";
+      } else {
+        result.textContent = "🚨 Warning: Possible social engineering attack!";
+      }
+    };
+
+    document.getElementById("noBtn").onclick = function() {
+      if (requestType === "user") {
+        result.textContent = "⚠ Unexpected response. Treating as suspicious.";
+      } else {
+        result.textContent = "✅ Code blocked. Hacker attempt prevented!";
+      }
+    };
+  </script>
+
+
+  <script src="script.js"></script>
+</body>
+</html>

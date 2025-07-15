@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login</title>
+  <style>
+    form {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInSlide 0.8s ease-out forwards;
+}
+
+@keyframes fadeInSlide {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+input:focus {
+  border: 2px solid #2196F3;
+  transition: border 0.3s ease;
+}
+    body { font-family: sans-serif; background: #f0f0f0; display: flex; justify-content: center; padding-top: 100px; }
+    form { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px #aaa; width: 100%; max-width: 350px; }
+    input { width: 100%; margin: 10px 0; padding: 10px; font-size: 16px; }
+    button { width: 100%; padding: 10px; background: #2196F3; color: white; border: none; font-size: 16px; }
+  </style>
+</head>
+<body>
+  <form onsubmit="login(event)">
+    <h2>Admin Login</h2>
+    <input type="text" id="username" placeholder="Username" required />
+    <input type="password" id="password" placeholder="Password" required />
+    <button type="submit">Login</button>
+  </form>
+  <script>
+    function login(e) {
+      e.preventDefault();
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+
+      fetch("http://localhost:3000/admin-login", {
+        method: "POST",
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ username, password })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          localStorage.setItem("adminToken", "granted");
+          window.location.href = "admin.html";
+        } else {
+          alert("❌ Login failed");
+        }
+      });
+    }
+  </script>
+</body>
+</html>

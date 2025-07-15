@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { font-family: sans-serif; padding: 20px; background: #f9f9f9; }
+    h2 { color: #333; }
+    #logViewer div { border-left: 4px solid green; margin: 10px 0; padding-left: 10px; }
+  </style>
+</head>
+<body>
+  <h2>🛡 Admin Log Viewer</h2>
+  <button onclick="logout()" style="float:right; background:#f44336; color:white; border:none; padding:8px 12px; border-radius:5px;">🚪 Logout</button>
+  <div id="logViewer"></div>
+  <script>
+  if (localStorage.getItem("adminToken") !== "granted") {
+    alert("Unauthorized. Redirecting to login.");
+    window.location.href = "login.html";
+  }
+
+  fetch("http://localhost:3000/get-logs")
+    .then(res => res.json())
+    .then(data => {
+      const viewer = document.getElementById("logViewer");
+      viewer.innerHTML = "<h3>Response Logs:</h3>";
+      data.logs.forEach(log => {
+        const statusIcon = log.suspicious ? "⚠️" : "✅";
+        const sourceIcon = log.requestType === "attacker" ? "🕵️" : "🙋";
+        const modeTag = log.demo ? "[🧪 DEMO]" : "[🟢 LIVE]";
+
+        viewer.innerHTML += `
+          <div style="border-left: 4px solid ${log.suspicious ? 'red' : 'green'}; padding-left: 10px; margin-bottom: 10px;">
+            <p>
+              ${modeTag}<br>
+              <strong>${sourceIcon} Source:</strong> ${log.requestType.toUpperCase()}<br>
+              <strong>🙍‍♂️ User Response:</strong> ${log.userResponse}<br>
+              <strong>🌍 Location:</strong> ${log.location}<br>
+              <strong>${statusIcon} Suspicious:</strong> ${log.suspicious ? "YES" : "NO"}<br>
+              <strong>📄 Result:</strong> ${log.result}<br>
+              <strong>⏰ Time:</strong> ${new Date(log.timestamp).toLocaleString()}
+            </p>
+          </div><hr>
+        `;
+      });
+    });
+
+  // ✅ Add this function here
+  function logout() {
+    localStorage.removeItem("adminToken");
+    window.location.href = "login.html";
+  }
+</script>
+</body>
+</html>
