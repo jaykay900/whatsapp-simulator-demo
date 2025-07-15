@@ -8,8 +8,22 @@ if (!localStorage.getItem("adminToken")) {
   document.getElementById("clearLogsBtn").style.display = "none";
 }
 
-scenarioText.textContent = `Request triggered. Source: ${requestType === "user" ? "YOU" : "UNKNOWN"}. Did you request this code?`;
+let fakeMessage = "";
 
+if (requestType === "attacker") {
+  const attackerMessages = [
+    "Hey! Just trying to log in from my backup phone — approve the code real quick.",
+    "It’s you, right? The account just asked for a login from Accra. Tap YES to continue.",
+    "Your WhatsApp security check requires your confirmation. Denying may disable your account.",
+    "New session attempt detected. Approval required to avoid suspension.",
+    "⚠️ This OTP was triggered by a system check. Confirm YES to keep access alive."
+  ];
+  fakeMessage = attackerMessages[Math.floor(Math.random() * attackerMessages.length)];
+}
+
+scenarioText.textContent = `Request triggered. Source: ${requestType === "user" ? "YOU" : "UNKNOWN"}.\n\n${
+  fakeMessage ? "Message: " + fakeMessage : "Did you request this code?"
+}`;
 const demoToggle = document.getElementById("demoToggle");
 
 function logResponse(userResponse) {
