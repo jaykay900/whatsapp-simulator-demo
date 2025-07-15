@@ -20,7 +20,7 @@
     window.location.href = "login.html";
   }
 
-  fetch("http://localhost:3000/get-logs")
+  fetch("/get-logs")
     .then(res => res.json())
     .then(data => {
       const viewer = document.getElementById("logViewer");
