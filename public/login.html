@@ -35,6 +35,9 @@ input:focus {
     <input type="password" id="password" placeholder="Password" required />
     <button type="submit">Login</button>
   </form>
+  <div id="user-feedback" style="display:none; margin-top: 20px; border: 1px solid #ccc; padding: 10px; background: #f9f9f9;">
+  <!-- Feedback from server will appear here -->
+</div>
   <script>
     function login(e) {
       e.preventDefault();
