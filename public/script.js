@@ -20,9 +20,20 @@ function logResponse(userResponse) {
   })
   .then(res => res.json())
   .then(data => {
-    result.textContent = `[${isDemo ? "DEMO" : "LIVE"}] ${data.data.result}`;
-    console.log("Logged:", data);
-  });
+  console.log('Logged:', data);
+  
+  // 🆕 Display feedback to user
+  const feedbackBox = document.getElementById('user-feedback');
+  feedbackBox.innerHTML = `
+    <h3>Your Feedback</h3>
+    <p><strong>Request Type:</strong> ${data.data.requestType}</p>
+    <p><strong>Your Response:</strong> ${data.data.userResponse}</p>
+    <p><strong>Location:</strong> ${data.data.location}</p>
+    <p><strong>Suspicious:</strong> ${data.data.suspicious ? 'Yes 🚩' : 'No ✅'}</p>
+    <p><strong>Result:</strong> ${data.data.result}</p>
+  `;
+  feedbackBox.style.display = 'block';
+});
 }
 
 document.getElementById("yesBtn").onclick = () => logResponse("yes");
