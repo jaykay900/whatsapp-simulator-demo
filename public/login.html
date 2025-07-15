@@ -39,30 +39,30 @@ input:focus {
   <!-- Feedback from server will appear here -->
 </div>
   <script>
-    function login(e) {
-      e.preventDefault();
-      const username = document.getElementById("username").value;
-      const password = document.getElementById("password").value;
+  function login(e) {
+    e.preventDefault();
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+    const feedbackBox = document.getElementById("user-feedback"); // ✅ Move this up here
 
-      fetch("http://localhost:3000/admin-login", {
-        method: "POST",
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ username, password })
-      })
-      .then(res => res.json())
-      .then(data => {
-        if (data.success) {
-          localStorage.setItem("adminToken", "granted");
-          feedbackBox.style.display = "none";
-feedbackBox.innerHTML = "";
-          window.location.href = "admin.html";
-        } else {
-          const feedbackBox = document.getElementById("user-feedback");
-feedbackBox.innerHTML = `<p style="color:red; font-weight:bold;">❌ Login failed. Please check your credentials.</p>`;
-feedbackBox.style.display = "block";
-        }
-      });
-    }
-  </script>
+    fetch("/admin-login", {
+      method: "POST",
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password })
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        localStorage.setItem("adminToken", "granted");
+        feedbackBox.style.display = "none";
+        feedbackBox.innerHTML = "";
+        window.location.href = "admin.html";
+      } else {
+        feedbackBox.innerHTML = `<p style="color:red; font-weight:bold;">❌ Login failed. Please check your credentials.</p>`;
+        feedbackBox.style.display = "block";
+      }
+    });
+  }
+</script>
 </body>
 </html>
