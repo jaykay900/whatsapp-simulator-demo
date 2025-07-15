@@ -46,10 +46,13 @@ function logResponse(userResponse) {
     <div style="padding: 50px; text-align: center;">
       <h2 style="color: red;">💥 SYSTEM COMPROMISED</h2>
       <p>The OTP was accepted by an outside attacker. Your session is no longer secure.</p>
-      <button onclick="location.reload()" style="padding:10px 20px; background:red; color:white; border:none; border-radius:5px;">🔁 Restart Simulation</button>
+      <div style="margin-top: 20px; background: #fff3cd; padding: 15px; border-left: 5px solid orange; border-radius: 5px;">
+        <strong>🛡️ Tip:</strong> Never approve codes you didn't personally request — attackers often use pressure and fake messages to trick you.
+      </div>
+      <button onclick="location.reload()" style="margin-top: 30px; padding:10px 20px; background:red; color:white; border:none; border-radius:5px;">🔁 Restart Simulation</button>
     </div>
   `;
-  return; // Stop further UI rendering
+  return;
 }
   console.log('Logged:', data);
   
