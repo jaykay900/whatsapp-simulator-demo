@@ -49,6 +49,31 @@ document.getElementById("viewLogsBtn").onclick = () => {
     .then(res => res.json())
     .then(data => {
       const viewer = document.getElementById("logViewer");
+      const map = L.map('map').setView([0, 0], 2); // World view
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; OpenStreetMap contributors'
+}).addTo(map);
+
+data.logs.forEach(log => {
+  // Optional: Only show suspicious
+  if (log.suspicious && log.lat && log.lng) {
+    L.circleMarker([log.lat, log.lng], {
+      radius: 8,
+      color: "red",
+      fillColor: "#f03",
+      fillOpacity: 0.5
+    })
+    .bindPopup(`
+      <strong>Suspicious Login</strong><br>
+      Location: ${log.location}<br>
+      Source: ${log.requestType}<br>
+      User Response: ${log.userResponse}<br>
+      Result: ${log.result}
+    `)
+    .addTo(map);
+  }
+});
       viewer.innerHTML = "<h3>Logged Responses:</h3>";
       data.logs.forEach(log => {
         viewer.innerHTML += `

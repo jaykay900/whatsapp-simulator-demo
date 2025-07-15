@@ -14,6 +14,7 @@
   <h2>🛡 Admin Log Viewer</h2>
   <button onclick="logout()" style="float:right; background:#f44336; color:white; border:none; padding:8px 12px; border-radius:5px;">🚪 Logout</button>
   <div id="logViewer"></div>
+  <div id="map" style="height: 400px; margin-top: 20px; border: 1px solid #ccc;"></div>
   <script>
   if (localStorage.getItem("adminToken") !== "granted") {
     alert("Unauthorized. Redirecting to login.");
