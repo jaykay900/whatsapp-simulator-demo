@@ -13,7 +13,7 @@ function logResponse(userResponse) {
     ? ["Ghana", "Nigeria", "Russia", "Brazil"][Math.floor(Math.random() * 4)]
     : "Ghana"; // Assume real users are in Ghana
 
-  fetch('http://localhost:3000/log-response', {
+  fetch('/log-response', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ requestType, userResponse, demo: isDemo, location })
@@ -40,7 +40,7 @@ document.getElementById("yesBtn").onclick = () => logResponse("yes");
 document.getElementById("noBtn").onclick = () => logResponse("no");
 
 document.getElementById("viewLogsBtn").onclick = () => {
-  fetch('http://localhost:3000/get-logs')
+  fetch('/log-response')
     .then(res => res.json())
     .then(data => {
       const viewer = document.getElementById("logViewer");
@@ -106,7 +106,7 @@ function runDemoSequence() {
 
 
 document.getElementById("clearLogsBtn").onclick = () => {
-  fetch('http://localhost:3000/clear-logs', {
+  fetch('/log-response', {
     method: 'DELETE'
   })
   .then(res => res.json())
